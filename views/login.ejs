@@ -1,0 +1,32 @@
+<%-include header.ejs%>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+        </div>
+        <div class="col-md-4 column">
+            <form class="form" role="form" action="/login" method="post">
+                <h1 style="text-align : center"> LMS Admin Login </h1>
+                <form role="form">
+                    <div style="padding: 0px;" class="form-group">
+                        <label for="Username">Username : </label>
+                        <input class="form-control" id="Username" name = "username"/>
+                    </div>
+                    <div style="padding: 0px;" class="form-group">
+                        <label for="Password">Password : </label>
+                        <input type="password" class="form-control" id="Password" name = "password"/>
+                    </div>
+                    <button style="margin: 00px;" type="submit" class="btn btn-block btn-success">Login</button>
+                </form>
+                <% if (locals.fail) {%>
+                <div class="alert alert-danger" style="margin : 20px">
+                    <a href="/login" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>Error!</strong> Wrong username or password
+                </div>
+                <% } %>
+            </form>
+        </div>
+        <div class="col-md-4 column">
+<%-include tail.ejs%>

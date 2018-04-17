@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Library Manage System</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $.extend({
+            StandardPost:function(url,args){
+                var form = $("<form method='post'></form>"),
+                    input;
+                form.attr({"action":url});
+                $.each(args,function(key,value){
+                    input = $("<input type='hidden'>");
+                    input.attr({"name":key});
+                    input.val(value);
+                    form.append(input);
+                });
+                $(document.body).append(form);
+                form.submit();
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            const tableObject = $('.tableSort');//获取id为tableSort的table对象
+            const tbHead = tableObject.children('thead');//获取table对象下的thead
+            const tbHeadTh = tbHead.find('tr th');//获取thead下的tr下的th
+            const tbBody = tableObject.children('tbody');//获取table对象下的tbody
+            const tbBodyTr = tbBody.find('tr');//获取tbody下的tr
+            let sortIndex = -1; //初始化索引
+            tbHeadTh.each(function() {//遍历thead的tr下的th
+                const thisIndex = tbHeadTh.index($(this));//获取th所在的列号
+                $(this).click(function() {  //鼠标点击事件
+                    const dataType = $(this).attr("type"); //获取当前点击列的 type
+                    checkColumnValue(thisIndex, dataType); //对当前点击的列进行排序 （当前索引，排序类型）
+                });
+            });
+
+            //对表格排序
+            function checkColumnValue(index, type) {
+                let i;
+                const trsValue = [];  //创建一个新的列表
+                tbBodyTr.each(function() { //遍历所有的tr标签
+                    const tds = $(this).find('td');//查找所有的 td 标签
+                    //将当前的点击列 push 到一个新的列表中
+                    //包括 当前行的 类型、当前索引的 值，和当前行的值
+                    trsValue.push(type + ".separator" + $(tds[index]).html() + ".separator" + $(this).html());
+                    $(this).html("");//清空当前列
+                });
+                const len = trsValue.length;//获取所有要拍戏的列的长度
+                var value1;
+                var value2;
+                if (index === sortIndex) {//sortIndex =-1
+                    trsValue.reverse();//???
+                } else {
+                    for (i = 0; i < len; i++) {//遍历所有的行
+                        type = trsValue[i].split(".separator")[0];// 获取要排序的类型
+                        for (let j = i + 1; j < len; j++) {
+                            value1 = trsValue[i].split(".separator")[1];//当前值
+                            value2 = trsValue[j].split(".separator")[1];//当前值的下一个
+                            if (type === "number") {
+                                value1 = value1 === "" ? 0 : value1;
+                                value2 = value2 === "" ? 0 : value2;
+                                if (parseFloat(value1) > parseFloat(value2)) {//如果当前值 大于 下一个值
+                                    let temp = trsValue[j];//那么就记住 大 的那个值
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            } else {
+                                if (value1.localeCompare(value2) > 0) {//该方法不兼容谷歌浏览器
+                                    let temp = trsValue[j];
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            }
+                        }
+                    }
+                }
+                for(i = 0; i < len; i++){
+                    $("tbody tr:eq(" + i + ")").html(trsValue[i].split(".separator")[2]);
+                }
+                sortIndex = index;
+            }
+        })
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" href="/">LMS</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/about">About</a>
+                        </li>
+                        <% if (locals.flag) {%>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/bookmanage">Book</a>
+                                </li>
+                                <li>
+                                    <a href="/borrowmanage">Borrow</a>
+                                </li>
+                                <li>
+                                    <a href="/cardmanage">Card</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <% } %>
+                        <form class="navbar-form navbar-left" role="search" action="/bookresult" method="post">
+                            <div class="form-group">
+                                <input type="text" name="bookname" class="form-control" placeholder="Book name"/>
+                            </div>
+                            <button type="submit" class="btn btn-default" >Search Book</button>
+                        </form>
+                    </ul>
+                    <% if (!locals.flag) {%>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                    </ul>
+                    <% } else { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/about"><%= locals.name %></a>
+                        </li>
+                        <li>
+                            <a href="/pswdchange">config</a>
+                        </li>
+                        <li>
+                            <a href="/logout">log out</a>
+                        </li>
+                    </ul>
+                    <% }%>
+                </div>
+            </nav>

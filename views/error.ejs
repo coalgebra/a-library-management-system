@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Library Manage System</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" href="#">A Library Management System</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/about">About</a>
+                        </li>
+                    </ul>
+                    <% if (!locals.flag) {%>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                    </ul>
+                    <% } else { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/about"><%= locals.username %></a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                    <% }%>
+                </div>
+
+            </nav>
+            <div class="jumbotron">
+                <h1>
+                    A Library Management System
+                </h1>
+                <p>
+                    This is a library management system
+                </p>
+                <p>
+                    please login to unlock all the privilege
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-large" href="/about">Learn more</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

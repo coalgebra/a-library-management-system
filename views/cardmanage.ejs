@@ -1,0 +1,58 @@
+<%-include header.ejs%>
+<div class="row clearfix">
+    <div class="col-md-9 column">
+        <table class="table table-hover table-striped tableSort" >
+            <caption>Library cards</caption>
+            <thead>
+            <tr>
+                <th type="text">Card Number</th>
+                <th type="text">Name</th>
+                <th type="text">Create Time</th>
+                <th type="number">Borrowed</th>
+                <th>Returned</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (locals.hasOwnProperty("results")) for (let i = 0; i < locals.results.length; i++) { %>
+            <tr>
+                <td> <%=locals.results[i].card_number%> </td>
+                <td> <%=locals.results[i].name%> </td>
+                <td> <%=locals.results[i].create_time%> </td>
+                <td> <%=locals.results[i].borrowed%> </td>
+                <td> <%=locals.results[i].returned%> </td>
+                <td> <button type="button" class="btn btn-danger btn-sm" onclick="<%="$.StandardPost('/cardmanage/remove', {cardnumber: '" + locals.results[i].card_number +"'})"%>" >
+                        Delete</button> </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3 column">
+        <% if (locals.fail) {%>
+        <div class="alert alert-danger">
+            <a href="/cardmanage" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <strong><% if (locals.errmsg) {%>
+            <%= locals.errmsg %>
+            <% } else { %>
+            Some error occurs...
+            <% } %>
+            </strong>
+        </div>
+        <% } %>
+        <form role="form" action="/cardmanage" method="post">
+            <div class="form-group">
+                <label for="cardnumber">Card Number</label>
+                <input type="text" class="form-control" id="cardnumber" name="cardnumber" />
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name"/>
+            </div>
+            <button type="submit" class="btn btn-default btn-success">Add New Card</button>
+        </form>
+    </div>
+</div>
+<%-include tail.ejs%>

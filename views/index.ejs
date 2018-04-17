@@ -1,0 +1,22 @@
+<%-include header.ejs%>
+  <div class="jumbotron">
+    <h1>
+      A Library Management System
+    </h1>
+    <p>
+      This is a library management system
+    </p>
+    <% if (!locals.flag) {%>
+    <p>
+      please login to unlock all the privilege
+    </p>
+    <p>
+      <a class="btn btn-primary btn-large" href="/about">Learn more</a>
+    </p>
+    <% } else { %>
+    <p>
+      You can do everything you want now.
+    </p>
+    <% }%>
+  </div>
+<%-include tail.ejs%>

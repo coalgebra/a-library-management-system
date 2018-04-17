@@ -1,0 +1,32 @@
+<%-include header.ejs%>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+        </div>
+        <div class="col-md-4 column">
+            <form class="form" role="form" action="/pswdchange" method="post">
+                <h1 style="text-align : center"> Change Password </h1>
+                <form role="form">
+                    <div style="padding: 0px;" class="form-group">
+                        <label for="Username">Old Password: </label>
+                        <input class="form-control" id="Username" name = "oldpassword"/>
+                    </div>
+                    <div style="padding: 0px;" class="form-group">
+                        <label for="Password">New Password : </label>
+                        <input type="password" class="form-control" id="Password" name = "newpassword"/>
+                    </div>
+                    <button style="margin: 00px;" type="submit" class="btn btn-block btn-success">Change</button>
+                </form>
+                <% if (locals.fail) {%>
+                <div class="alert alert-danger" style="margin : 20px">
+                    <a href="/pswdchange" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>Error!</strong> Wrong password!
+                </div>
+                <% } %>
+            </form>
+        </div>
+        <div class="col-md-4 column">
+<%-include tail.ejs%>

@@ -1,0 +1,32 @@
+<%-include header.ejs%>
+    <table class="table table-hover  table-striped tableSort">
+        <caption>Search Result</caption>
+        <p>click the header to sort the table</p>
+        <thead>
+        <tr>
+            <th type="text">Book Number</th>
+            <th type="text">Book Name</th>
+            <th type="text">Publisher</th>
+            <th type="number">Year</th>
+            <th type="text">Author</th>
+            <th type="number">Price</th>
+            <th type="number">Storage</th>
+            <th type="number">Total Num</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% if (locals.hasOwnProperty("results")) for (let i = 0; i < locals.results.length; i++) { %>
+            <tr>
+                <td> <%=locals.results[i].booknum%> </td>
+                <td> <%=locals.results[i].bookname%> </td>
+                <td> <%=locals.results[i].publisher%> </td>
+                <td> <%=locals.results[i].year%> </td>
+                <td> <%=locals.results[i].author%> </td>
+                <td> <%=locals.results[i].price%> </td>
+                <td> <%=locals.results[i].storage%> </td>
+                <td> <%=locals.results[i].total%> </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+<%-include tail.ejs%>
